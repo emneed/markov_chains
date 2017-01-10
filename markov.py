@@ -1,4 +1,5 @@
 from random import choice
+import sys
 
 
 def open_and_read_file(file_path):
@@ -50,18 +51,21 @@ def make_text(chains):
 
     key = choice(chains.keys())
     text = key[0] + " " + key[1]
+    loops = 0
 
+    #while loops < 1000:
     while True:
         try:
             value = choice(chains[key])
             text += " " + value
             key = (key[1], value)
-
+            loops += 1
         except KeyError:
             return text
+    #return text
 
 
-input_path = "gettysburg.txt"
+input_path = sys.argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
