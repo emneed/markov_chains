@@ -1,5 +1,4 @@
 from random import choice
-import re
 
 
 def open_and_read_file(file_path):
@@ -10,13 +9,13 @@ def open_and_read_file(file_path):
     """
 
     data_file = open(file_path).read()
-    words = re.split(" |\n", data_file)
+    words = data_file.split()
 
     return words
 
 
 def make_chains(text_string):
-    """Takes input text as string; returns _dictionary_ of markov chains.
+    """Takes input text as list; returns _dictionary_ of markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
     and the value would be a list of the word(s) that follow those two
@@ -30,7 +29,16 @@ def make_chains(text_string):
 
     chains = {}
 
-    # your code goes here
+    for index in range(len(text_string) - 2):
+        key1 = text_string[index]
+        key2 = text_string[index + 1]
+        value = text_string[index + 2]
+        existing_values = chains.get((key1, key2))
+        if existing_values is None:
+            chains[(key1, key2)] = [value]
+        else:
+            existing_values.append(value)
+            chains[(key1, key2)] = existing_values
 
     return chains
 
