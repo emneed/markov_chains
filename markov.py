@@ -1,7 +1,6 @@
 from random import choice
 import sys
 import string
-import re
 
 
 def open_and_read_file(file_path):
@@ -65,8 +64,8 @@ def make_text(chains):
     text = text + " ".join(key)
     loops = 0
 
-    #while loops < 1000:
     while True:
+    #while len(text) < 140:
         try:
             value = choice(chains[key])
             text += " " + value
@@ -81,7 +80,7 @@ def make_text(chains):
                         text = text[:(len(text) - index)]
                         return text
             return text
-    #return text
+    return text
 
 
 input_path = sys.argv[1]
