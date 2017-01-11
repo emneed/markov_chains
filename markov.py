@@ -15,7 +15,7 @@ def open_and_read_file(file_path):
     return words
 
 
-def make_chains(text_string):
+def make_chains(text_string, num):
     """Takes input text as list; returns _dictionary_ of markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -30,16 +30,22 @@ def make_chains(text_string):
 
     chains = {}
 
-    for index in range(len(text_string) - 2):
-        key1 = text_string[index]
-        key2 = text_string[index + 1]
-        value = text_string[index + 2]
-        existing_values = chains.get((key1, key2))
+    #Looping over text_string to build each key
+    for index in range(len(text_string) - num):
+        keys = ()
+
+        #Fills the key based on number of words in n_gram
+        for item in range(num):
+            keys = keys + (text_string[index + item],)
+
+        #Assigns the key a value word after the n_gram
+        value = text_string[index + num]
+        existing_values = chains.get(keys)
         if existing_values is None:
-            chains[(key1, key2)] = [value]
+            chains[keys] = [value]
         else:
             existing_values.append(value)
-            chains[(key1, key2)] = existing_values
+            chains[keys] = existing_values
 
     return chains
 
@@ -50,7 +56,7 @@ def make_text(chains):
     text = ""
 
     key = choice(chains.keys())
-    text = key[0] + " " + key[1]
+    text = text + " ".join(key)
     loops = 0
 
     #while loops < 1000:
@@ -58,7 +64,8 @@ def make_text(chains):
         try:
             value = choice(chains[key])
             text += " " + value
-            key = (key[1], value)
+            list_key = list(key)[1:]
+            key = tuple(list_key) + (value,)
             loops += 1
         except KeyError:
             return text
@@ -71,7 +78,7 @@ input_path = sys.argv[1]
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, int(sys.argv[2]))
 
 # Produce random text
 random_text = make_text(chains)
