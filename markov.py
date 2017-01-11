@@ -1,5 +1,6 @@
 from random import choice
 import sys
+import string
 
 
 def open_and_read_file(file_path):
@@ -54,8 +55,12 @@ def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
     text = ""
+    chosen = False
 
-    key = choice(chains.keys())
+    while not chosen:
+        key = choice(chains.keys())
+        if key[0][0] in string.ascii_uppercase:
+            chosen = True
     text = text + " ".join(key)
     loops = 0
 
