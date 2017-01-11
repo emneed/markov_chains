@@ -64,8 +64,8 @@ def make_text(chains):
     text = text + " ".join(key)
     loops = 0
 
-    while True:
-    #while len(text) < 140:
+    #while True:
+    while len(text) < 140:
         try:
             value = choice(chains[key])
             text += " " + value
@@ -76,10 +76,14 @@ def make_text(chains):
             if text[-1] not in string.punctuation:
                 for index, char in enumerate(text[-1::-1]):
                     if (not char.isalpha()) and (char != " "):
-                        print index
                         text = text[:(len(text) - index)]
                         return text
             return text
+    if text[-1] not in string.punctuation:
+        for index, char in enumerate(text[-1::-1]):
+            if (not char.isalpha()) and (char != " "):
+                text = text[:(len(text) - index)]
+                return text
     return text
 
 

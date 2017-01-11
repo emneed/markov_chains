@@ -34,4 +34,4 @@ jack_chains = markov.make_chains(characters["Jack."], num)
 lady_chains = markov.make_chains(characters["Lady"], num)
 miss_chains = markov.make_chains(characters["Miss"], num)
 
-print markov.make_text(lady_chains)
+print markov.make_text(algernon_chains)
