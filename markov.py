@@ -1,6 +1,7 @@
 from random import choice
 import sys
 import string
+import re
 
 
 def open_and_read_file(file_path):
@@ -73,6 +74,12 @@ def make_text(chains):
             key = tuple(list_key) + (value,)
             loops += 1
         except KeyError:
+            if text[-1] not in string.punctuation:
+                for index, char in enumerate(text[-1::-1]):
+                    if (not char.isalpha()) and (char != " "):
+                        print index
+                        text = text[:(len(text) - index)]
+                        return text
             return text
     #return text
 
